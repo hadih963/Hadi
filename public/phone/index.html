@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#07090d">
+  <title>TV Notes</title>
+  <link rel="stylesheet" href="phone.css">
+</head>
+<body>
+  <header class="top">
+    <h1>TV Notes</h1>
+    <span class="conn" id="conn" title="Connection to TV server"></span>
+  </header>
+
+  <div class="board-wrap">
+    <canvas id="board" aria-label="Drawing board, mirrored on the TV"></canvas>
+  </div>
+
+  <section class="tools">
+    <div class="row" role="radiogroup" aria-label="Tool">
+      <button class="seg active" data-tool="pen">Pen</button>
+      <button class="seg" data-tool="text">Text</button>
+    </div>
+
+    <div class="row colors" id="colors" role="radiogroup" aria-label="Color"></div>
+
+    <div class="row" id="pen-opts" role="radiogroup" aria-label="Brush size">
+      <button class="size active" data-size="6"><i style="width:6px;height:6px"></i></button>
+      <button class="size" data-size="14"><i style="width:12px;height:12px"></i></button>
+      <button class="size" data-size="30"><i style="width:20px;height:20px"></i></button>
+      <button class="size" data-size="60"><i style="width:28px;height:28px"></i></button>
+    </div>
+
+    <div class="row" id="text-opts" hidden>
+      <input id="text-input" type="text" maxlength="200" placeholder="Type, then tap the board" autocomplete="off">
+      <select id="text-size" aria-label="Text size">
+        <option value="48">S</option>
+        <option value="80" selected>M</option>
+        <option value="130">L</option>
+      </select>
+    </div>
+
+    <div class="row actions">
+      <button id="undo">Undo</button>
+      <button id="clear" class="danger">Clear</button>
+    </div>
+
+    <div class="row actions">
+      <button id="painting">Painting mode</button>
+      <button id="next">Next painting</button>
+    </div>
+  </section>
+
+  <script type="module" src="phone.js"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "tv-dashboard",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Ad-free ambient dashboard for a Philips Titan OS TV: phone notes, clock, weather, painting mode.",
+  "type": "module",
+  "main": "server/index.js",
+  "engines": { "node": ">=20.12" },
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "test": "node --test test/*.test.mjs",
+    "screenshots": "node scripts/screenshot.mjs"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}

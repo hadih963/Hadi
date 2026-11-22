@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=1920, initial-scale=1">
+  <title>TV Dashboard</title>
+  <link rel="stylesheet" href="tv.css">
+</head>
+<body class="mode-home">
+  <!-- HOME MODE ---------------------------------------------------------- -->
+  <main id="home" class="home" aria-label="Home">
+    <section class="clock" aria-live="off">
+      <div class="time" id="time">--:--</div>
+      <div class="date" id="date"></div>
+    </section>
+
+    <section class="board glass" aria-label="Notes from your phone">
+      <canvas id="notes"></canvas>
+      <div class="board-empty" id="board-empty">
+        <div class="board-empty-title">Draw or write on your phone</div>
+        <div class="board-empty-url" id="phone-url">…/phone/</div>
+      </div>
+    </section>
+
+    <aside class="side">
+      <section class="weather glass" id="weather" aria-label="Weather">
+        <div class="w-now">
+          <svg class="w-icon" id="w-icon" viewBox="0 0 64 64" aria-hidden="true"></svg>
+          <div>
+            <div class="w-temp"><span id="w-temp">--</span>°</div>
+            <div class="w-label" id="w-label">Loading weather…</div>
+          </div>
+        </div>
+        <div class="w-meta" id="w-meta"></div>
+        <div class="w-hours" id="w-hours"></div>
+      </section>
+    </aside>
+
+    <nav class="bar" aria-label="Actions">
+      <button class="btn glass" data-nav data-action="painting" id="btn-painting">
+        <span class="btn-dot dot-red" aria-hidden="true"></span>Painting mode
+      </button>
+      <button class="btn glass" data-nav data-action="undo">Undo note</button>
+      <button class="btn glass" data-nav data-action="clear">Clear notes</button>
+      <div class="status" id="status"><span class="status-dot"></span><span id="status-text">Connecting…</span></div>
+    </nav>
+  </main>
+
+  <!-- PAINTING (AMBIENT) MODE ------------------------------------------- -->
+  <section id="painting" class="painting" aria-label="Painting mode" hidden>
+    <img id="painting-img" alt="" decoding="async">
+    <div class="painting-shade" id="painting-shade"></div>
+    <div class="drift" id="drift">
+      <div class="corner">
+        <div class="corner-time" id="p-time">--:--</div>
+        <div class="corner-sub"><span id="p-date"></span><span id="p-weather"></span></div>
+        <div class="corner-note" id="p-note" hidden>✎ New note</div>
+      </div>
+      <div class="caption" id="caption"></div>
+    </div>
+  </section>
+
+  <script type="module" src="tv.js"></script>
+</body>
+</html>
