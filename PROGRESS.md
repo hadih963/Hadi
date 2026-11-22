@@ -27,6 +27,12 @@
   3 min, rotation, night dim), remote focus navigation. 5 automated tests pass;
   phone-to-TV drawing verified end to end in headless Chromium. Screenshots in screenshots/.
 
+- 2026-11-22: Correction from owner: the TV does **screen mirroring**, not Google Cast.
+  New primary route: old Android phone runs the server in Termux, shows /tv/ as an
+  installed full-screen app, and mirrors it. /tv/ now renders on a fixed 1920x1080 stage
+  scaled to any screen, adds a web manifest (full-screen landscape), tap-to-fullscreen
+  and a screen wake lock. Checked in headless Chromium at TV size and phone-landscape size.
+
 ## Owner answers (Phase 0)
 | Question | Answer |
 |---|---|
@@ -37,7 +43,7 @@
 | Spotify Premium | Yes |
 | Painting schedule | Manual ("when I choose it") |
 | Camera feedback | No |
-| TV visible as | Cast target |
+| TV visible as | Screen-mirroring target (not Google Cast) |
 
 ## On-TV checks the owner must do
 1. Settings > About: OS name (Titan OS or not), firmware.
@@ -45,7 +51,7 @@
 3. Laptop: `curl -k https://<TV_IP>:1926/6/system` and `curl http://<TV_IP>:1925/6/system`
    (read-only, harmless). Paste the output.
 4. Phone: Cast target: YES (done).
-5. Phase 2: cast the laptop tab (README section 2A) and report: does it appear,
+5. Phase 2: mirror an old phone running the dashboard (README section 2A) and report: does it appear,
    is text sharp, how big is the drawing lag, does the dashboard fill the screen
    (no black bars, nothing cut off at the edges)?
 6. Phase 2: draw on the phone while it shows on the TV.

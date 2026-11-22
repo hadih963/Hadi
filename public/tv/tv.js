@@ -209,7 +209,33 @@ document.addEventListener('keydown', (e) => {
   if (is(k, 'BACK')) e.preventDefault();   // don't let Back close the app/tab by accident
 });
 
-window.addEventListener('resize', () => notes.resize());
+// Scale the 1920x1080 stage to fit any screen: TV, laptop window or a phone being mirrored.
+function fitStage() {
+  const s = Math.min(innerWidth / 1920, innerHeight / 1080);
+  $('stage').style.transform = `scale(${s})`;
+  notes.resize();
+}
+window.addEventListener('resize', fitStage);
+fitStage();
+
+// ---------------- when a phone shows this page (to mirror it to the TV) ----------------
+// 1) First tap: go full screen and turn to landscape, so the mirrored image fills the TV.
+// 2) Wake lock: keep the phone screen on, because mirroring stops when the screen sleeps.
+//    (Wake lock only works on https or localhost, i.e. when the server runs on that phone.)
+if (matchMedia('(pointer: coarse)').matches) {
+  document.addEventListener('pointerdown', async () => {
+    if (document.fullscreenElement) return;
+    try {
+      await document.documentElement.requestFullscreen({ navigationUI: 'hide' });
+      await screen.orientation?.lock?.('landscape');
+    } catch { /* not allowed here: fine, the installed app is already full screen */ }
+  });
+}
+async function keepAwake() {
+  try { if (document.visibilityState === 'visible') await navigator.wakeLock?.request('screen'); } catch {}
+}
+document.addEventListener('visibilitychange', keepAwake);
+keepAwake();
 
 // ---------------- start ----------------
 tick();

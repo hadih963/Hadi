@@ -17,6 +17,14 @@ html, body {
   -webkit-font-smoothing: antialiased; cursor: none;
 }
 [hidden] { display: none !important; }
+body { background: #000; }   /* shows as bars if the screen is not 16:9 */
+
+/* Fixed 1920x1080 design canvas, centered and scaled by fitStage() in tv.js */
+#stage {
+  position: fixed; left: 50%; top: 50%;   /* fixed: never makes the page wider than the screen */
+  width: 1920px; height: 1080px; margin: -540px 0 0 -960px;
+  transform-origin: center center; overflow: hidden; background: var(--bg);
+}
 
 /* Glass panels. backdrop-filter is costly on weak TV chips, so the background
    behind them is a static gradient and the blur is modest. */

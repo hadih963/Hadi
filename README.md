@@ -35,27 +35,36 @@ not load, your laptop firewall blocks port 3000. On Ubuntu: `sudo ufw allow 3000
 
 ## 2. Get it onto the TV (try in this order)
 
-### A. Cast a Chrome tab from the laptop (no hardware; your TV showed up as a Cast target)
-1. Open Chrome (or Chromium) on the laptop at `http://localhost:3000/tv/`.
-2. Menu (⋮) → **Cast…** → **Sources** → **Cast tab** → pick the TV.
-3. Press F11 in that tab so it is full screen at 1920x1080.
+The TV supports **screen mirroring** (it copies a whole device screen), not tab
+casting. So a device must show `/tv/` full screen, and you mirror that device.
+The page draws on a fixed 1920x1080 stage that scales to fit any screen.
 
-The laptop renders the page and the TV only shows it. The laptop must stay awake:
-`systemd-inhibit --what=idle:sleep --why="TV dashboard" npm start` keeps it up
-while the server runs.
+### A. Old Android phone = server + screen (zero cost, recommended)
+1. On the old phone, install **Termux** from F-Droid (not the Play Store version), then:
+   ```bash
+   pkg update && pkg install nodejs git
+   git clone -b claude/philips-tv-dashboard-8c6gga https://github.com/hadih963/Hadi.git
+   cd Hadi && npm install && npm start
+   ```
+2. In Chrome on that phone, open `http://localhost:3000/tv/` → ⋮ → **Add to Home screen / Install app**.
+   Open it from the new icon: it starts full screen in landscape. In a normal tab, tap once to go full screen.
+3. Swipe down → **Screen cast / Smart View / Mirror** → pick the TV.
+4. Keep it plugged in. Developer options → **Stay awake while charging** ON. In Termux, run `termux-wake-lock` so Android does not stop the server.
+5. Draw from your main phone at `http://<old-phone-ip>:3000/phone/`. Find the IP in Wi-Fi settings → network details.
 
-### B. An old Android phone as the always-on host (zero cost, try next)
-1. Install **Termux** from F-Droid, then `pkg install nodejs git`, clone the repo, `npm install`, `npm start`.
-2. In Chrome on that same phone, open `http://localhost:3000/tv/`. Use "Add to Home screen", which opens it full screen.
-3. Cast or mirror the phone screen to the TV (quick settings → Cast / Smart View / Screen cast).
-4. Keep it plugged in. Developer options → "Stay awake while charging".
+### B. Laptop mirroring (Linux, Miracast)
+Install **GNOME Network Displays** (`flatpak install flathub org.gnome.NetworkDisplays`),
+pick the TV, open `http://localhost:3000/tv/` in a browser and press F11. This needs a
+Wi-Fi card with Wi-Fi Direct support; many Intel cards have it.
 
-### C. Raspberry Pi kiosk (most reliable; buy only if A and B disappoint)
-Covered in a later phase: Chromium `--kiosk`, autostart, and HDMI-CEC on/off.
+### C. HDMI cable from the laptop
+Always works: plug in, choose the HDMI input on the TV, open `/tv/`, press F11.
 
-### D. Titan OS DevView (if Titan grants you partner access)
-Add `https://…/tv/` as a sandbox app in the Titan Partner Portal. It probably
-needs a public HTTPS URL, for example a Cloudflare Tunnel.
+### D. Raspberry Pi kiosk (only if A–C disappoint)
+Chromium `--kiosk`, autostart and HDMI-CEC on/off. Covered in a later phase.
+
+### E. Titan OS DevView (if Titan grants you partner access)
+Add the `/tv/` URL as a sandbox app in the Titan Partner Portal (probably needs public HTTPS).
 
 ## 3. Using it
 - **Phone:** Pen or Text tool, 8 colors, 4 brush sizes, Undo, Clear, Painting mode, Next painting.
@@ -107,7 +116,7 @@ added later if you want one.
 
 ## 7. Rollback / uninstall
 Nothing here touches the TV's firmware or settings.
-- **Cast:** stop casting in Chrome. The TV returns to its normal screen.
+- **Mirroring:** stop mirroring on the phone or laptop. The TV returns to its normal screen.
 - **Server:** Ctrl+C. Delete the folder to remove everything, including `data/state.json`.
 - **Firewall:** `sudo ufw delete allow 3000/tcp` if you opened it.
 - **Code:** every step is a git commit. `git log`, then `git checkout <commit>` to go back.

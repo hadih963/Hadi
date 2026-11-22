@@ -2,11 +2,18 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=1920, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
   <title>TV Dashboard</title>
   <link rel="stylesheet" href="tv.css">
+  <!-- Lets an Android phone install this page as a full-screen landscape app (for screen mirroring) -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg">
+  <meta name="theme-color" content="#07090d">
+  <meta name="mobile-web-app-capable" content="yes">
 </head>
 <body class="mode-home">
+<!-- Everything is laid out on a fixed 1920x1080 stage that tv.js scales to fit the screen -->
+<div id="stage">
   <!-- HOME MODE ---------------------------------------------------------- -->
   <main id="home" class="home" aria-label="Home">
     <section class="clock" aria-live="off">
@@ -60,6 +67,7 @@
     </div>
   </section>
 
+</div>
   <script type="module" src="tv.js"></script>
 </body>
 </html>
